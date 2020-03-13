@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap-Table</title>
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/css/bootstrap.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../bootstrap-3.3.7-dist/bootstrap-table.css">
+    <script src="../../js/jquery-3.4.1.min.js"></script>
+    <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../../bootstrap-3.3.7-dist/bootstrap-table.js"></script>
+    <script src="../../bootstrap-3.3.7-dist/bootbox.min.js"></script>
+
+
+</head>
+<body>
+<div>
+    <div>
+        <div class="col-*-12">
+            <div id="toolbar">
+                <!--<div class="btn btn-primary" data-toggle="modal" data-target="#addModal">添加记录</div>-->
+            </div>
+            <table id="mytab" class="table table-hover"></table>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        //根据窗口调整表格高度
+        $(window).resize(function () {
+            $('#mytab').bootstrapTable('resetView', {
+                height: tableHeight()
+            })
+        })
+
+        $('#mytab').bootstrapTable({
+            url: "http://localhost:8080/user/queryAllByLimit?page=1&limit=100",//数据源
+            dataField: "data",//服务端返回数据键值 就是说记录放的键值是data，分页时使用总记录数的键值为total
+            height: tableHeight(),//高度调整
+            // search: false,//是否搜索
+            pagination: true,//是否分页
+            locale:'zh-CN',
+            // paginationVAlign:"center",
+            striped: true,                      //是否显示行间隔色
+            showExportData : true,// 启用导出功能
+            paginationFirstText : "首页",// 设置首页按钮显示文本
+            paginationLastText : "尾页",// 设置尾页页按钮显示文本
+            paginationPreText : "上一页", // 设置上一页按钮显示文本
+            paginationNextText : "下一页", // 设置下一页按钮显示文本
+            pageSize: 5,//单页记录数
+            pageList: [5, 10, 20, 50],//分页步进值
+            // sidePagination: "server",//服务端分页
+            sidePagination: "client",//前端分页
+            contentType: "application/x-www-form-urlencoded",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+            dataType: "json",//期待返回数据类型
+            method: "get",//请求方式
+            searchAlign: "left",//查询框对齐方式
+            queryParamsType: "limit",//查询参数组织方式
+            queryParams: function getParams(params) {
+                //params obj
+                params.other = "otherInfo";
+                return params;
+            },
+            searchOnEnterKey: false,//回车搜索
+            showRefresh: true,//刷新按钮
+            showColumns: true,//列选择按钮
+            buttonsAlign: "left",//按钮对齐方式
+            toolbar: "#toolbar",//指定工具栏
+            toolbarAlign: "right",//工具栏对齐方式
+            
+            columns: [
+                {
+                    title: "全选",
+                    field: "select",
+                    checkbox: true,
+                    width: 20,//宽度
+                    align: "center",//水平
+                    valign: "middle"//垂直
+                },
+                {
+                    title: "ID",//标题
+                    field: "id",//键名
+                    sortable: true,//是否可排序
+                    order: "desc"//默认排序方式
+                },
+                {
+                    field: "name",
+                    title: "昵称",
+                    sortable: true,
+                    titleTooltip: "this is name"
+                },
+                {
+                    field: "age",
+                    title: "年龄",
+                    sortable: true,
+                },
+                {
+                    field: "phone",
+                    title: "手机号",
+                    sortable: true,
+                },
+                {
+                    field: "sex",
+                    title: "性别",
+                    sortable: true,
+                },
+                {
+                    field: "address",
+                    title: "收货地址",
+                    sortable: true,
+                },
+                {
+                    field: 'del',
+                    title: '删除',
+                    width: 100,
+                    align: 'center',
+                    valign: 'middle',
+                    events:delEvents,
+                    formatter:delFunction
+                }
+            ],
+            onClickRow: function (row, $element) {
+                //$element是当前tr的jquery对象,改变颜色
+                // $element.css("background-color", "green");
+            },//单击row事件
+            locale: "zh-CN", //中文支持
+            detailView: false, //是否显示详情折叠
+            detailFormatter: function (index, row, element) {
+                var html = '';
+                $.each(row, function (key, val) {
+                    html += "<p>" + key + ":" + val + "</p>"
+                });
+                return html;
+            }
+        });
+
+        $("#addRecord").click(function () {
+            alert("name:" + $("#name").val() + " age:" + $("#age").val());
+        });
+    })
+    //删除事件
+    window.delEvents ={
+        "click #del_btn":function(e,value,row,index)
+        {
+            console.log(row);
+            bootbox.confirm({
+                size: "small",
+                message: "您确定删除"+row.id+"行吗？",
+                buttons: {
+                    confirm: {
+                        label: '是',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: '否',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function(result) {
+                    if(result) {
+                        $.ajax({
+                            method:"get",
+                            url:'http://localhost:8080/user/deleteById',
+                            data:{
+                                id:row.id,
+                            },
+                            dataType : "jsonp",
+                            async:true,
+                            success:function (res) {
+
+                            }
+                        });
+                    }
+                    $('#mytab').bootstrapTable('destroy');
+                    $("#mytab").bootstrapTable('refresh');
+                    location.reload();
+                }
+            });
+        }
+    }
+    function delFunction(value,row,index){
+        return [
+            '<button type="button" class="btn btn-primary" id="del_btn">删除</button>'
+        ].join('');
+    }
+    function tableHeight() {
+        return $(window).height() - 50;
+    }
+
+</script>
+</body>
+</html>

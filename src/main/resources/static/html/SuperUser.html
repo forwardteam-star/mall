@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>后台管理</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
+
+</head>
+<body>
+<style>
+    /* 后台管理框架的样式 */
+
+    *{
+        padding: 0;
+        margin: 0;
+
+    }
+    /* 下拉菜单和导航 */
+    .navbar-collapse{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .nav>li{
+        text-align: center;
+        background-color: #4e5465;
+    }
+    .nav>li>a{
+        color: #ffffff;
+        margin: 0 0px;
+
+    }
+    .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover{
+        background-color: #009688;
+    }
+    .dropdown-menu{
+        float: none;
+        position: initial;
+        min-width: 200px;
+        margin-left: 0;
+        background-color: #E3E3E3;
+        box-shadow: none;
+        text-align: center;
+    }
+    .dropdown-menu>li>a{
+        padding: 10px 15px;
+    }
+
+    /* 主体样式 */
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background-color: #FFFFFF;
+        font-family: "Microsoft YaHei", sans-serif;
+    }
+    .pageSidebar{
+        width: 240px;
+        height:100%;
+        padding-bottom: 30px;
+        overflow: auto;
+        background-color: #282b33;
+    }
+    .splitter {
+        width: 5px;
+        height: 100%;
+        bottom: 0;
+        left: 240px;
+        position: absolute;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    .pageContent{
+        height: 100%;
+        min-width: 768px;
+        left: 246px;
+        top: 0;
+        right: 0;
+        z-index: 3;
+        padding-bottom: 30px;
+        position: absolute;
+    }
+    .pageContainer{
+        bottom: 0;
+        left:0;
+        right: 0;
+        top: 50px;
+        overflow: auto;
+        position: absolute;
+        width: 100%;
+    }
+    .footer {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        margin-top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: absolute;
+        z-index: 10;
+        background-color:#DFDFDF;
+    }
+
+</style>
+<!--顶部导航栏部分-->
+<nav class=" navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" title="logoTitle" href="#">商城后台管理</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li role="presentation">
+                    <a href="#">当前用户：<span class="badge">管理员</span></a>
+                </li>
+                <li>
+                    <a href="../login/logout">
+                        <span class="glyphicon glyphicon-lock"></span>退出登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- 中间主体内容部分 -->
+<div class="pageContainer">
+    <!-- 左侧导航栏 -->
+    <div class="pageSidebar">
+        <ul class="nav nav-stacked nav-pills">
+            <li role="presentation">
+                <a href="./List/商品管理.html" target="mainFrame" >商品管理</a>
+            </li>
+            <li role="presentation">
+                <a href="增加商品.html" target="mainFrame">增加商品</a>
+            </li>
+            <li role="presentation">
+                <a href="./List/订单管理.html" target="mainFrame">订单管理</a>
+            </li>
+            <li role="presentation">
+                <a href="./List/用户管理.html" target="mainFrame">用户管理</a>
+            </li>
+
+        </ul>
+    </div>
+
+    <!-- 左侧导航和正文内容的分隔线 -->
+    <div class="splitter"></div>
+    <!-- 正文内容部分 -->
+    <!-- 主区域部分 -->
+    <div class="pageContent">
+        <iframe src="./List/后台主页.html" id="mainFrame" name="mainFrame"
+                frameborder="0" width="100%"  height="100%" frameBorder="0">
+        </iframe>
+    </div>
+
+</div>
+<!-- 底部页脚部分 -->
+<div class="footer">
+    <p class="text-center">
+        2020 &copy; 商城后台管理
+    </p>
+</div>
+
+<script type="text/javascript">
+    $(".nav li").click(function() {
+        $(".active").removeClass('active');
+        $(this).addClass("active");
+    });
+
+
+</script>
+</body>
+</html>

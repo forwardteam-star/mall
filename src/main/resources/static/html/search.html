@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <script src="../js/base.js"></script>
+    <link rel="stylesheet" href="../layui/css/layui.css">
+</head>
+<body>
+<script>
+    //获取url中"?"符后的字串
+    function GetRequest() {
+        var url = location.search;
+        url = decodeURI(url);
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
+    function search() {
+        name = $('#search-input').val();
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8080/issues/selectByName",
+            data: {name: name},
+            async: true,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                var li = '';
+                for (var a = 0; a < result.data.length; a++) {
+                    li += '  <li class="left">\n' +
+                        '                    <a href="detail.html?id=' +
+                        result.data[a].id +
+                        '">\n' +
+                        '                        <div class="recom-ibox">\n' +
+                        '                            <img class="" style="width: 92%;" data-auto="autopic"\n' +
+                        '                                 src="' +
+                        result.data[a].issuesUrl +
+                        '">\n' +
+                        '                        </div>\n' +
+                        '                        <div class="recom-txt ">\n' +
+                        '                            <div>\n' +
+                        '                                <div class="pirbox">\n' +
+                        '                                    <div class="balepir">\n' +
+                        '                                    <div   style="margin-top: 40px;margin-left: auto;margin-right: auto;width: auto;">\n' +
+                        '                                        <p class="block" style="text-align: center;margin-left: auto;margin-right: auto;width: auto;">$' +
+                        result.data[a].issuesPrice +
+                        '</p>\n' +
+                        '                                        <center style="font-size: 18px;color: black; text-align: center" class="grey">' +
+                        result.data[a].issuesName +
+                        '</center>\n' +
+                        '                                    </div>\n' +
+                        '                                        <center style="margin-right: 18px;margin-top: -80px" class="grey">\n' +
+                        '                                            发布时间：' +
+                        result.data[a].issuesDate +
+                        '</center>\n' +
+                        '                                    </div>\n' +
+                        '                                </div> \n' +
+                        '                            </div>\n' +
+                        '                        </div>\n' +
+                        '                    </a>\n' +
+                        '                </li>'
+                }
+                $('#IssuesUL').html(li);
+
+            }
+        })
+    }
+
+
+
+    $(function () {
+        var request = new Object();
+        request = GetRequest(); // GetRequest();
+        var name = request['name'];
+        $('#search-input').val(name);
+        console.log(name);
+
+        search()
+    })
+</script>
+<div class="xm">
+    <img src="../images/A.gif"/>
+</div>
+<div id="sitenav" class="sn">
+    <div class="area">
+        <div class="login-info" id="js_login_info">
+            <div class="say-hi">Hi，欢迎到来</div>
+            <div class="login-link-wrap" id="login-link-wrap">
+                请<a rel="nofollow" href="login.html">登录</a>
+                <span class="span-line">|</span>
+                <a rel="nofollow" target="_blank" href="login.html">免费注册</a>
+            </div>
+        </div>
+        <ul class="sn-menuwrap">
+            <li class="item menu q-myeelly">
+                <a class="menu-hd" href="order.html" rel="nofollow" target="_blank">
+                    我的订单
+                    <!--<span class="sn-icon sn-i-arrow"></span>-->
+                </a>
+            </li>
+            <li class="item sn-cart" id="q_cart">
+                <div class="menu-hd">
+                    <i class="sn-icon sn-i-cart"></i>
+                    <a class="link-a" id="cart_nums" href="cart.html" target="_blank" rel="nofollow">
+                        <span>购物车</span>
+                    </a>
+                    <!--<span class="sn-icon sn-i-arrow"></span>-->
+                </div>
+            </li>
+
+            </li>
+            </li>
+            <li class="item menu set-shop">
+                <a href="SuperLogin.html"
+                   target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
+            </li>
+        </ul>
+        <div class="index-link"><a class="clr-red" href="index.html" title="首页">首页</a></div>
+    </div>
+</div>
+<!--header-->
+<div class="header">
+    <div class="w">
+        <a class="logo" href="index.html">商城</a>
+        <div class="search-con">
+            <input class="search-input" id="search-input" placeholder="请输入商品名称"/>
+            <button onclick="search()" class="btn search-btn" id="search-btn">搜索</button>
+        </div>
+    </div>
+
+</div>
+<!--header-->
+
+<div id="recommend" style="position: relative">
+    <!--<a style="font-size: 300px;position: absolute;top: 300px;" onclick="back()"><</a>-->
+    <!--<a style="font-size: 300px;position: absolute;top: 300px;right: 10px" onclick="next()">></a>-->
+    <div class="recom-goods area">
+        <h3 class="model-title">
+            商品列表
+        </h3>
+        <div class="recomgoods J_recomgoods">
+            <ul class="recom clearfix J_recom" id="IssuesUL">
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p><a href="" target="_blank">毕业设计</a> 2020 &copy; <a href=""
+                                                          target="_blank">某某某公司</a></p>
+    <p>
+        <a href="" target="_blank">开发人员：</a>
+        <a href="" target="_blank">某某某</a>
+        <a href="" target="_blank"></a>
+    </p>
+    <p>
+        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
+
+    </p>
+</div>
+</body>
+</html>

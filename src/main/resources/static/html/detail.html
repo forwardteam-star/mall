@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/detail.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/base.js"></script>
+</head>
+<style type="text/css">
+    .crumb .crumb-item {
+        color: #888;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+</style>
+<script>
+    function addCart() {
+        //调用
+        var request = new Object();
+        request = GetRequest(); // GetRequest();
+        var tid = request['id'];
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8080/cart/insert",
+            withCredentials: true,
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },	//前端适配：允许session跨域
+            async: true,
+            data: {
+                issuesId: tid,
+                num:$('#goodscount').val(),
+            },
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                if (result!=null){
+                    alert("加入购物车成功")
+                }else {
+                    alert("请先登录")
+                }
+
+            }
+        })
+    }
+
+    //获取url中"?"符后的字串
+    function GetRequest() {
+        var url = location.search;
+        url = decodeURI(url);
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            var strs = str.split("&");
+
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+
+    //调用
+    var request = new Object();
+    request = GetRequest(); // GetRequest();
+    var tid = request['id'];
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8080/issues/selectOne",
+        async: true,
+        data: {id: tid},
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            $('.p-name').html(result.issuesName);
+            $('.p-subtitle').html(result.issuesName);
+            $('#p-price').html(result.issuesPrice);
+            $('#reservenum').html(result.issuesNum);
+            $('#detail-con').html(result.issuesDetails);
+            $('#img').attr("src", result.issuesUrl);
+        }
+    })
+</script>
+<body>
+<div id="sitenav" class="sn">
+    <div class="area">
+        <div class="login-info" id="js_login_info">
+            <div class="say-hi">Hi，欢迎到来</div>
+            <div class="login-link-wrap" id="login-link-wrap">
+                请<a rel="nofollow" href="login.html">登录</a>
+                <span class="span-line">|</span>
+                <a rel="nofollow" target="_blank" href="login.html">免费注册</a>
+            </div>
+        </div>
+        <ul class="sn-menuwrap">
+            <li class="item menu q-myeelly">
+                <a class="menu-hd" href="order.html" rel="nofollow" target="_blank">
+                    我的订单
+                    <!--<span class="sn-icon sn-i-arrow"></span>-->
+                </a>
+            </li>
+            <li class="item sn-cart" id="q_cart">
+                <div class="menu-hd">
+
+                    <i class="sn-icon sn-i-cart"></i><a class="link-a" id="cart_nums" href="cart.html" target="_blank" rel="nofollow">
+                        <span>购物车</span>
+                    </a>
+                </div>
+            </li>
+
+            </li>
+            </li>
+            <li class="item menu set-shop">
+               <a href="SuperLogin.html"
+                   target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
+            </li>
+        </ul>
+        <div class="index-link"><a class="clr-red" href="index.html" title="首页">首页</a></div>
+    </div>
+</div>
+<!--header-->
+<div class="header">
+    <div class="w">
+        <a class="logo" href="./index.html">商城</a>
+        <div class="search-con">
+            <input class="search-input" id="search-input" placeholder="请输入商品名称"/>
+            <button class="btn search-btn" onclick="var name = $('#search-input').val();
+    window.open('search.html?name='+name)" id="search-btn">搜索
+            </button>
+        </div>
+    </div>
+</div>
+<!--header-->
+
+<div class="page-container w">
+    <div class="intro-wrap clear">
+        <div class="p-img-wrap">
+            <div class="main-img-con">
+                <img id="img" class="main-img" src="../images/AA.jpg">
+            </div>
+        </div>
+        <div class="p-info-wrap">
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    var t = $('#goodscount');
+                    /*  数量显示框*/
+                    console.log(t.val());
+                    console.log($('#reservenum').text());
+                    $('#plus').click(function () {
+
+                        if (t.val() < parseInt($('#reservenum').text())) {/* 数量最大不能超过商品库存量 */
+                            t.val(parseInt(t.val()) + 1);
+                        } else {
+                            t.val($('#reservenum').text());
+                        }
+
+                    })
+                    $('#minus').click(function () {
+                        if (t.val() <= 1) {    /*数量最少为1  */
+                            t.val(1);
+                        } else {
+                            t.val(parseInt(t.val()) - 1);
+                        }
+                        console.log(t.val());
+                        console.log($('#reservenum').text());
+                    })
+                });
+            </script>
+            <div class="info-item">
+                <span class="label">数量 </span>
+                <input id="goodscount"  class="p-count" value="1">
+                <span class="p-count-btn plus" id="plus" data-opera-type="plus">+</span>
+                <span class="p-count-btn minus" id="minus" data-opera-type="mius">-</span>
+            </div>
+            <div class="info-item">
+                <a class="btn cart-add" onclick="addCart()">加入购物车</a>
+            </div>
+        </div>
+    </div>
+    <div class="detail-wrap">
+        <div class="detail-tab-con">
+            <ul class="tab-list">
+                <li class="tab-item active">商品详情</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="fly-footer">
+    <p><a href="" target="_blank">毕业设计</a> 2020 &copy; <a href=""
+                                                                 target="_blank">某某某公司</a></p>
+    <p>
+        <a href="" target="_blank">开发人员：</a>
+        <a href="" target="_blank">某某某</a>
+        <a href="" target="_blank"></a>
+    </p>
+    <p>
+        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
+
+    </p>
+</div>
+
+</body>
+</html>
+
+
+

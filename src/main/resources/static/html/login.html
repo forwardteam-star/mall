@@ -1,0 +1,162 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
+    <script src="../js/login.js"></script>
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+<div class="xm">
+    <img src="../images/A.gif"/>
+</div>
+<style>
+    .xm {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        font-size: 0;
+        transition: all .3s ease-in-out;
+        transform: translateY(3px);
+    }
+
+    .xm:hover {
+        -webkit-transform: translateY(0);
+        -ms-transform: translateY(0);
+    }
+
+    .xm img {
+        width: 50px;
+    }
+</style>
+<div id="sitenav" class="sn">
+    <div class="area">
+        <div class="login-info" id="js_login_info">
+            <div class="say-hi">Hi，欢迎到来</div>
+            <div class="login-link-wrap" id="login-link-wrap">
+                请<a rel="nofollow" href="login.html">登录</a>
+                <span class="span-line">|</span>
+                <a rel="nofollow" target="_blank" href="login.html">免费注册</a>
+            </div>
+        </div>
+        <ul class="sn-menuwrap">
+            <li class="item menu q-myeelly">
+                <a class="menu-hd" href="order.html" rel="nofollow" target="_blank">
+                    我的订单
+                    <!--<span class="sn-icon sn-i-arrow"></span>-->
+                </a>
+            </li>
+            <li class="item sn-cart" id="q_cart">
+                <div class="menu-hd">
+
+                    <i class="sn-icon sn-i-cart"></i><a class="link-a" id="cart_nums" href="cart.html" target="_blank"
+                                                        rel="nofollow">
+                    <span>购物车</span>
+                </a>
+                </div>
+            </li>
+
+            </li>
+            </li>
+            <li class="item menu set-shop">
+                <a href="SuperLogin.html"
+                   target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
+            </li>
+        </ul>
+        <div class="index-link"><a class="clr-red" href="index.html" title="首页">首页</a></div>
+    </div>
+</div>
+<div class="login">
+    <div class="loginBox LRBox">
+        <ul class="loginBox-tab LRBox-tab">
+            <li onclick='a()' id="left" class="">
+                <p class="text">账号密码登录</p>
+            </li>
+            <li onclick='b()' id="right" class="active">
+                <p class="text">注册</p>
+            </li>
+        </ul>
+        <div class="loginBox-content">
+            <div id="leftc" class="j-loginContent loginBox-content-item hide">
+                <form>
+                    <input type="hidden" name="returnUrl" value="https://www.eelly.com/index.php?app=member"/>
+                    <div class="errorText j-errorText"></div>
+                    <ul class="loginForm">
+                        <li>
+                            <input type="text" name="username" class="inputText" placeholder="帐号"
+                                   autocomplete="off"/>
+                        </li>
+                        <li class="j-passwordOut">
+                            <input type="password" name="password" class="inputText" placeholder="密码"/>
+                        </li>
+
+                        <li>
+                            <button onclick="login()" type="button" class="buttonRed submitBtn">登录</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div id="rightc" class="j-loginContent loginBox-content-item ">
+                <form>
+                    <input type="hidden" name="returnUrl" value="https://www.eelly.com/index.php?app=member"/>
+                    <div class="errorText j-errorText">
+                    </div>
+                    <ul class="loginForm">
+
+                        <li>
+                            <div class="hasBtn">
+                                <input type="text" class="inputText j-mobileLogin" name="phone"
+                                       placeholder="手机" autocomplete="off"/>
+                                <!--<button type="button" class="buttonRed j-sendCaptcha">校验是否注册</button>-->
+                            </div>
+                        </li>
+                        <li>
+                            <input type="text" name="pass" class="inputText" placeholder="密码"/>
+                        </li>
+                        <li>
+                            <input type="text" name="sex" class="inputText" placeholder="性别"/>
+                        </li>
+
+                        <li>
+                            <input type="text" name="name" class="inputText" placeholder="昵称"/>
+                        </li>
+                        <li>
+                            <input type="text" name="age" class="inputText" placeholder="年龄"/>
+                        </li>
+                        <li>
+                            <input type="text" name="address" class="inputText" placeholder="地址1"/>
+                        </li>
+                        <li>
+                            <input type="text" name="address2" class="inputText" placeholder="地址2"/>
+                        </li>
+                        <li>
+                            <input type="text" name="address3" class="inputText" placeholder="地址3"/>
+                        </li>
+                        <li>
+                            <button type="button" onclick="register()" class="buttonRed submitBtn">注册</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="fly-footer">
+    <p><a href="" target="_blank">毕业设计</a> 2020 &copy;
+        <a href="" target="_blank">某某某公司</a></p>
+    <p>
+        <a href="" target="_blank">开发人员：</a>
+        <a href="" target="_blank">某某某</a>
+        <a href="" target="_blank"></a>
+    </p>
+    <p>
+        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
+
+    </p>
+</div>
+
+</body>
+</html>
