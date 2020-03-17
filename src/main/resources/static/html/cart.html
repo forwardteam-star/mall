@@ -144,12 +144,54 @@
                 <td class="cart-cell cell-check">
                     <input type="checkbox" class="cart-select" name="check" checked="checked">
                 </td>
+                <td class="cart-cell cell-img">
+                    <a href="detail.html?id=">
+                        <img class="p-img" src="../images/AA.jpg"
+                             alt="华为1000">
+                    </a>
+                </td>
+                <td class="cart-cell cell-info">
+                    <a class="link p-name" href="">华为1000</a>
+                </td>
+                <td class="cart-cell cell-price ">$
+                    <span class="price">6999</span>
+                </td>
+                <td class="cart-cell cell-count">
+                    <span class="count-btn min" data-opera-type="minus">-</span>
+                    <input class="count-input text_box" type="text" value="8">
+                    <span class="count-btn add" data-opera-type="plus">+</span>
+                </td>
+                <td class="cart-cell cell-total">￥
+                    <span class="total">55976</span>
+                </td>
+                <td class="cart-cell cell-opera"><a class="link cart-delete">删除</a></td>
             </tr>
             <tr>
                 <td class="cart-cell cell-check">
                     <input type="checkbox" class="cart-select" name="check" checked="checked">
 
                 </td>
+                <td class="cart-cell cell-img">
+                    <a>
+                        <img class="p-img" src="../images/AA.jpg"
+                             alt="华为1000">
+                    </a>
+                </td>
+                <td class="cart-cell cell-info">
+                    <a class="link p-name" href="">华为1000</a>
+                </td>
+                <td class="cart-cell cell-price ">$
+                    <span class="price">6999</span>
+                </td>
+                <td class="cart-cell cell-count">
+                    <span class="count-btn min" data-opera-type="minus">-</span>
+                    <input class="count-input text_box" type="text" value="8">
+                    <span class="count-btn add" data-opera-type="plus">+</span>
+                </td>
+                <td class="cart-cell cell-total">￥
+                    <span class="total">55976</span>
+                </td>
+                <td class="cart-cell cell-opera"><a class="link cart-delete">删除</a></td>
             </tr>
             </tbody>
         </table>
@@ -160,6 +202,13 @@
 
             </label>
         </div>
+        <div class="submit-con">
+            <span>总价：</span>
+            <span class="submit-total" id="total">￥55976</span>
+            <span class="btn submit-btn" id="Settlement" onclick="$('#enter').css('display','');$('#Settlement').css('display','none');$('#queren').css('display','');">去结算</span>
+            <span style="display: none;" id="enter" class="btn submit-btn" onclick="createOrder()">确认</span>
+        </div>
+        &nbsp
     </div>
 
 </div>
