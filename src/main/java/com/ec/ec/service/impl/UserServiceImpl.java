@@ -97,4 +97,9 @@ public class UserServiceImpl implements UserService {
     public void deleteById(long id) {
          this.userDao.deleteById(id);
     }
+
+    @Override
+    public User queryByPhone(String mobilePhone) {
+        return userDao.findByPhone(mobilePhone);
+    }
 }

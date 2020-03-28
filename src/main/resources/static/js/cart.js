@@ -11,7 +11,7 @@ $(function () {
         dataType: "json",
         success: function (result) {
             console.log(result);
-            if (result.code == 404) {
+            if (result.code === 404) {
                 alert("请先登录")
                 window.location.href = "index.html"
             } else {

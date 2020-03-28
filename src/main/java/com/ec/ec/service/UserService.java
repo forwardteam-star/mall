@@ -62,4 +62,6 @@ public interface UserService {
      */
     void deleteById(long id);
 
+    User queryByPhone(String mobilePhone);
+
 }

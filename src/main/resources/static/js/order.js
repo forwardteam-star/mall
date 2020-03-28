@@ -141,7 +141,7 @@ function enter(id) {
             console.log(result);
 
         }
-    })
+    });
 
     location.reload()
 }

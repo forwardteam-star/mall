@@ -5,6 +5,7 @@ import com.ec.ec.dao.UserDao;
 import com.ec.ec.entity.User;
 import com.ec.ec.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,32 @@ public class UserController {
         }
         return dataVo;
     }
+
+    @GetMapping("edit")
+    public boolean edit(HttpServletRequest request, String phone, String password, String address, String address2, String address3) {
+        User user = this.userService.queryByPhone(phone);
+        user.setPassword(password);
+        if (!StringUtils.isEmpty(address)) {
+            user.setAddress(address);
+        }
+        if (!StringUtils.isEmpty(address2)) {
+            user.setAddress(address2);
+        }
+        if (StringUtils.isEmpty(address3)) {
+            user.setAddress3(address3);
+        }
+        userService.update(user);
+        return true;
+    }
+
+    @GetMapping("editDetail")
+    @ResponseBody
+    public User editDetail(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (User) session.getAttribute("user");
+    }
+
+
 
 
 }
