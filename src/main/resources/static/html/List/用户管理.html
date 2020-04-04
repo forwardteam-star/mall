@@ -145,7 +145,6 @@
     window.delEvents ={
         "click #del_btn":function(e,value,row,index)
         {
-            console.log(row);
             bootbox.confirm({
                 size: "small",
                 message: "您确定删除"+row.id+"行吗？",
@@ -189,17 +188,6 @@
     function tableHeight() {
         return $(window).height() - 50;
     }
-
-    /**
-     * 列的格式化函数 在数据从服务端返回装载前进行处理
-     * @param  {[type]} value [description]
-     * @param  {[type]} row   [description]
-     * @param  {[type]} index [description]
-     * @return {[type]}       [description]
-     */
-    // function infoFormatter(value, row, index) {
-    //     return "id:" + row.id + " name:" + row.name + " age:" + row.age;
-    // }
 </script>
 </body>
 </html>

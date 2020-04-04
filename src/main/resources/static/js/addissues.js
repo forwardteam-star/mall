@@ -28,11 +28,6 @@ function addIssues() {
     var issuesPrice = $('#issuesPrice').val();
     var issuesUrl = $('#issuesUrl').val();
     var issuesDetails = editor.getValue();
-    var data = new FormData();
-    // if (issuesDetails){
-    //
-    // }
-    console.log(issuesDetails);
     $.ajax({
         type: "get",
         url: "http://localhost:8080/issues/insert",
@@ -49,7 +44,6 @@ function addIssues() {
             withCredentials: true
         },	//前端适配：允许session跨域
         success: function (result) {
-            console.log(result);
             alert(result.msg);
         }
     })

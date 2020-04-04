@@ -53,11 +53,6 @@
                 </div>
             </li>
 
-            <li>
-                <a href="editUserDetail.html"
-                   target="_blank"><span>个人信息管理</span></a>
-            </li>
-
             <li class="item menu set-shop">
                 <a href="SuperLogin.html"
                    target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
@@ -91,7 +86,6 @@
 
             dataType: "json",
             success: function (result) {
-                console.log(result);
                 $('#name').val(result.data.name);
                 $('#phone').val(result.data.phone);
                 var address=' <option  value="'+result.data.address+'">'+result.data.address+'</option>'+
@@ -149,23 +143,21 @@
                 </td>
                 <td class="cart-cell cell-img">
                     <a href="detail.html?id=">
-                        <img class="p-img" src="../images/AA.jpg"
-                             alt="华为1000">
                     </a>
                 </td>
                 <td class="cart-cell cell-info">
-                    <a class="link p-name" href="">华为1000</a>
+                    <a class="link p-name" href=""></a>
                 </td>
-                <td class="cart-cell cell-price ">$
-                    <span class="price">6999</span>
+                <td class="cart-cell cell-price ">
+                    <span class="price"></span>
                 </td>
                 <td class="cart-cell cell-count">
-                    <span class="count-btn min" data-opera-type="minus">-</span>
+                    <span class="count-btn min" data-opera-type="minus"></span>
                     <input class="count-input text_box" type="text" value="8">
-                    <span class="count-btn add" data-opera-type="plus">+</span>
+                    <span class="count-btn add" data-opera-type="plus"></span>
                 </td>
-                <td class="cart-cell cell-total">￥
-                    <span class="total">55976</span>
+                <td class="cart-cell cell-total">
+                    <span class="total"></span>
                 </td>
                 <td class="cart-cell cell-opera"><a class="link cart-delete">删除</a></td>
             </tr>
@@ -176,23 +168,20 @@
                 </td>
                 <td class="cart-cell cell-img">
                     <a>
-                        <img class="p-img" src="../images/AA.jpg"
-                             alt="华为1000">
                     </a>
                 </td>
                 <td class="cart-cell cell-info">
-                    <a class="link p-name" href="">华为1000</a>
+                    <a class="link p-name" href=""></a>
                 </td>
-                <td class="cart-cell cell-price ">$
-                    <span class="price">6999</span>
+                <td class="cart-cell cell-price ">
+                    <span class="price"></span>
                 </td>
                 <td class="cart-cell cell-count">
-                    <span class="count-btn min" data-opera-type="minus">-</span>
+                    <span class="count-btn min" data-opera-type="minus"></span>
                     <input class="count-input text_box" type="text" value="8">
-                    <span class="count-btn add" data-opera-type="plus">+</span>
+                    <span class="count-btn add" data-opera-type="plus"></span>
                 </td>
-                <td class="cart-cell cell-total">￥
-                    <span class="total">55976</span>
+                <td class="cart-cell cell-total">
                 </td>
                 <td class="cart-cell cell-opera"><a class="link cart-delete">删除</a></td>
             </tr>
@@ -206,27 +195,14 @@
             </label>
         </div>
         <div class="submit-con">
-            <span>总价：</span>
-            <span class="submit-total" id="total">￥55976</span>
+            <span></span>
+            <span class="submit-total" id="total"></span>
             <span class="btn submit-btn" id="Settlement" onclick="$('#enter').css('display','');$('#Settlement').css('display','none');$('#queren').css('display','');">去结算</span>
             <span style="display: none;" id="enter" class="btn submit-btn" onclick="createOrder()">确认</span>
         </div>
         &nbsp
     </div>
 
-</div>
-<div class="fly-footer">
-    <p><a href="" target="_blank">毕业设计</a> 2020 &copy; <a href=""
-                                                          target="_blank">某某某公司</a></p>
-    <p>
-        <a href="" target="_blank">开发人员：</a>
-        <a href="" target="_blank">某某某</a>
-        <a href="" target="_blank"></a>
-    </p>
-    <p>
-        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
-
-    </p>
 </div>
 </body>
 </html>

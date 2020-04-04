@@ -43,7 +43,6 @@
             },
             dataType: "json",
             success: function (result) {
-                console.log(result);
                 if (result!=null){
                     alert("加入购物车成功")
                 }else {
@@ -81,7 +80,6 @@
         data: {id: tid},
         dataType: "json",
         success: function (result) {
-            console.log(result);
             $('.p-name').html(result.issuesName);
             $('.p-subtitle').html(result.issuesName);
             $('#p-price').html(result.issuesPrice);
@@ -118,11 +116,6 @@
                 </div>
             </li>
 
-            <li>
-                <a href="editUserDetail.html"
-                   target="_blank"><span>个人信息管理</span></a>
-            </li>
-
             <li class="item menu set-shop">
                <a href="SuperLogin.html"
                    target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
@@ -153,22 +146,20 @@
             </div>
         </div>
         <div class="p-info-wrap">
-            <p class="p-name">华为100</p>
-            <p class="p-subtitle">华为100</p>
+            <p class="p-name"></p>
+            <p class="p-subtitle"></p>
             <div class="info-item p-price-con">
-                <span class="label">价格：</span>
-                <span class="p-price" id="p-price">￥6999</span>
+                <span class="label"></span>
+                <span class="p-price" id="p-price"></span>
             </div>
             <div class="info-item p-quantity-con">
-                <span class="label">库存</span>
-                <span id="reservenum" class="p-price">1000</span>
+                <span class="label"></span>
+                <span id="reservenum" class="p-price"></span>
             </div>
             <script type="text/javascript">
                 $(function () {
                     var t = $('#goodscount');
                     /*  数量显示框*/
-                    console.log(t.val());
-                    console.log($('#reservenum').text());
                     $('#plus').click(function () {
 
                         if (t.val() < parseInt($('#reservenum').text())) {/* 数量最大不能超过商品库存量 */
@@ -184,8 +175,6 @@
                         } else {
                             t.val(parseInt(t.val()) - 1);
                         }
-                        console.log(t.val());
-                        console.log($('#reservenum').text());
                     })
                 });
             </script>
@@ -207,27 +196,11 @@
             </ul>
         </div>
         <div class="detail-con" id="detail-con">
-            dwadwafesgtdhbygjnugjmtng
             <p style="font-size: 28px">这里可以用富文本加图片</p>
             <p style="font-size: 18px">这里介绍商品详情</p>
         </div>
     </div>
 </div>
-
-<div class="fly-footer">
-    <p><a href="" target="_blank">毕业设计</a> 2020 &copy; <a href=""
-                                                                 target="_blank">某某某公司</a></p>
-    <p>
-        <a href="" target="_blank">开发人员：</a>
-        <a href="" target="_blank">某某某</a>
-        <a href="" target="_blank"></a>
-    </p>
-    <p>
-        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
-
-    </p>
-</div>
-
 </body>
 </html>
 

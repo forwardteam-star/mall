@@ -11,7 +11,6 @@ $(function () {
         async: true,
         // dataType: "json",
         success: function (result) {
-            console.log(result);
             if (result.code!=404) {
                 $('#login-link-wrap').html(result.data.name);
             }

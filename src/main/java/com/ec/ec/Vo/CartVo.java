@@ -30,15 +30,4 @@ public class CartVo {
         this.selected = false;
         this.issuesId = issues.getId();
     }
-
-    public CartVo(Integer id, String title, String image, Integer num, double price, boolean selected, Integer issuesId) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.num = num;
-        this.price = price;
-        this.selected = selected;
-        this.issuesId = issuesId;
-    }
-
 }

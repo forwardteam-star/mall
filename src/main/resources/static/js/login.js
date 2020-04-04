@@ -24,7 +24,6 @@ function register() {
         async: true,
         // dataType: "json",
         success: function (result) {
-            // console.log(result+"****");
             // alert(result);
             if (result == "") {
                 alert("注册失败，手机号已被注册或填写错误");
@@ -52,7 +51,6 @@ function login() {
         async: true,
         // dataType: "json",
         success: function (result) {
-            console.log(result);
             if (result === "") {
                 alert("密码错误");
             } else {

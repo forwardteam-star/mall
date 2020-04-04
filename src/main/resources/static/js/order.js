@@ -12,7 +12,6 @@ $(function () {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
             if (result==null) {
                 alert("请先登录")
                 window.location.href = "index.html"
@@ -138,8 +137,6 @@ function enter(id) {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
-
         }
     });
 

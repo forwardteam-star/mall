@@ -10,7 +10,6 @@ $(function () {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
             if (result.code === 404) {
                 alert("请先登录")
                 window.location.href = "index.html"
@@ -68,7 +67,6 @@ $(function () {
         }
     })
     $(".add").click(function () {
-        console.log("***");
         var t = $(this).parent().find('input[class*=text_box]');
         t.val(parseInt(t.val()) + 1);
         var price = $(this).parent().parent().find('td[class*=cell-price]').find('span[class*=price]')
@@ -113,8 +111,6 @@ function deleteCart(id) {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
-
         }
     })
     alert("删除成功");
@@ -126,7 +122,6 @@ function createOrder() {
     var j = 0
     var ci = document.getElementsByName("check");
     for (var i = 0; i < ci.length; i++) {
-        console.log(ci[i].checked);
         if (ci[i].checked == true) {
             var id = ci[i].dataset["id"]  //获取标签自定义属性的值
             B[j++] = id
@@ -151,7 +146,6 @@ function createOrder() {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
 
         }
     })

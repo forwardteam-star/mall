@@ -64,7 +64,6 @@
                     cache: false,
                     data: formdata,
                     success: function (data) {
-                        console.log(data);
                         $('#issuesUrl').val(data.file_path);
                         alert(data.msg)
                     }

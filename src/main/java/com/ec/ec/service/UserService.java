@@ -36,15 +36,6 @@ public interface UserService {
      */
     DataVo queryAllByLimit(int page, int limit);
 
-    int queryAllSize();
-
-    /**
-     * 新增数据
-     *
-     * @param user 实例对象
-     * @return 实例对象
-     */
-    User insert(User user);
 
     /**
      * 修改数据

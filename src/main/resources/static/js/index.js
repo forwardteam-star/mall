@@ -7,9 +7,7 @@ $.ajax({
     async: true,
     dataType: "json",
     success: function (result) {
-        console.log(result);
         maxpage=result/limite;
-        console.log(maxpage);
     }
 })
 
@@ -24,7 +22,6 @@ function limit() {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
             var li = '';
             for (var a = 0; a < result.data.length; a++) {
                 li += '  <li class="left">\n' +
@@ -77,7 +74,6 @@ function news() {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
             var li = '';
             for (var a = result.data.length - 1; a > result.data.length - 5; a--) {
                 li += '  <li class="left">\n' +
@@ -144,7 +140,6 @@ function search() {
         async: true,
         dataType: "json",
         success: function (result) {
-            console.log(result);
             var li = '';
             for (var a = 0; a < result.data.length; a++) {
                 li += '  <li class="left">\n' +

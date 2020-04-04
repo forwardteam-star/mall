@@ -8,5 +8,4 @@ public class DataVo {
     private String msg;
     private Integer total;
     private Object data;
-
 }

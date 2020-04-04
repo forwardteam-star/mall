@@ -1,17 +1,17 @@
 package com.ec.ec.service.impl;
 
+import java.util.Date;
+
+import javax.annotation.Resource;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
 import com.ec.ec.Vo.DataVo;
 import com.ec.ec.dao.UserDao;
 import com.ec.ec.entity.User;
 import com.ec.ec.service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
 
 /**
  * (User)表服务实现类
@@ -67,25 +67,6 @@ public class UserServiceImpl implements UserService {
         objson.setCode(0);
         return objson;
     }
-
-    @Override
-    public int queryAllSize() {
-        return userDao.findAll().size();
-    }
-
-    /**
-     * 新增数据
-     *
-     * @param user 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public User insert(User user) {
-        this.userDao.save(user);
-
-        return user;
-    }
-
 
     @Override
     public User update(User user) {

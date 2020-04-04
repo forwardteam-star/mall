@@ -37,7 +37,6 @@
             async: true,
             dataType: "json",
             success: function (result) {
-                console.log(result);
                 var li = '';
                 for (var a = 0; a < result.data.length; a++) {
                     li += '  <li class="left">\n' +
@@ -86,8 +85,6 @@
         request = GetRequest(); // GetRequest();
         var name = request['name'];
         $('#search-input').val(name);
-        console.log(name);
-
         search()
     })
 </script>
@@ -117,14 +114,9 @@
                     <a class="link-a" id="cart_nums" href="cart.html" target="_blank" rel="nofollow">
                         <span>购物车</span>
                     </a>
-                    <!--<span class="sn-icon sn-i-arrow"></span>-->
                 </div>
             </li>
 
-            <li>
-                <a href="editUserDetail.html"
-                   target="_blank"><span>个人信息管理</span></a>
-            </li>
             <li class="item menu set-shop">
                 <a href="SuperLogin.html"
                    target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
@@ -144,11 +136,8 @@
     </div>
 
 </div>
-<!--header-->
 
 <div id="recommend" style="position: relative">
-    <!--<a style="font-size: 300px;position: absolute;top: 300px;" onclick="back()"><</a>-->
-    <!--<a style="font-size: 300px;position: absolute;top: 300px;right: 10px" onclick="next()">></a>-->
     <div class="recom-goods area">
         <h3 class="model-title">
             商品列表
@@ -160,18 +149,5 @@
     </div>
 </div>
 
-<div class="fly-footer">
-    <p><a href="" target="_blank">毕业设计</a> 2020 &copy; <a href=""
-                                                          target="_blank">某某某公司</a></p>
-    <p>
-        <a href="" target="_blank">开发人员：</a>
-        <a href="" target="_blank">某某某</a>
-        <a href="" target="_blank"></a>
-    </p>
-    <p>
-        <a href="" target="_blank">所有信息来自互联网，若有侵权，请联系我</a>
-
-    </p>
-</div>
 </body>
 </html>

@@ -1,42 +1,28 @@
 package com.ec.ec.util;
 
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPReply;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 /**
  **/
 public class Util {
-
-    //ftp服务器ip地址
-    private static final String FTP_ADDRESS = "39.107.240.42";
-    //端口号
-    private static final int FTP_PORT = 21;
-    //用户名
-    private static final String FTP_USERNAME = "wxxxx";
-    //密码
-    private static final String FTP_PASSWORD = "pE8Zm35R8c";
-    //图片路径
-    private static final String FTP_BASEPATH = "/";
-
     //生成17位订单号
     public static String getOrderIdByTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
         String newDate = sdf.format(new Date());
-        String result = "";
+        StringBuilder result = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < 3; i++) {
-            result += random.nextInt(10);
+            result.append(random.nextInt(10));
         }
         return newDate + result;
     }

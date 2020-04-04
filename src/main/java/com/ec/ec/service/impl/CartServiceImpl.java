@@ -1,5 +1,12 @@
 package com.ec.ec.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.ec.ec.Vo.CartVo;
 import com.ec.ec.Vo.DataVo;
 import com.ec.ec.dao.CartDao;
@@ -7,13 +14,6 @@ import com.ec.ec.dao.IssuesDao;
 import com.ec.ec.entity.Cart;
 import com.ec.ec.entity.Issues;
 import com.ec.ec.service.CartService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * (Cart)表服务实现类
@@ -37,27 +37,6 @@ public class CartServiceImpl implements CartService {
         return this.cartDao.getOne(id);
     }
 
-//    @Override
-//    public Integer getStock(Integer issuesId, long openId) {
-//        return cartDao.getStock(openId,issuesId);
-//    }
-
-    /**
-     * 查询多条数据
-     *
-     * @param limit 查询条数
-     * @return 对象列表
-     */
-    @Override
-    public DataVo queryAllByLimit(int page, int limit) {
-        PageRequest pageReques=PageRequest.of(page-1,limit);   //获取第1页的两条记录
-        Page<Cart> articleList = cartDao.findAll(pageReques);
-        DataVo objson = new DataVo();
-        objson.setData(articleList.getContent());
-        objson.setTotal(issuesDao.findAll().size());
-        objson.setCode(0);
-        return objson;
-    }
 
     @Override
     public DataVo getAllCart(long openId) {
@@ -95,19 +74,6 @@ public class CartServiceImpl implements CartService {
         }
         return cart;
     }
-
-    /**
-     * 修改数据
-     *
-     * @param cart 实例对象
-     * @return 实例对象
-     */
-    @Override
-    public Cart update(Cart cart) {
-        this.cartDao.saveAndFlush(cart);
-        return this.queryById(cart.getId());
-    }
-
     /**
      * 通过主键删除数据
      *

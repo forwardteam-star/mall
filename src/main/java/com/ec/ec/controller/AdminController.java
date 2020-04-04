@@ -32,6 +32,7 @@ public class AdminController {
     public Admin selectOne(Integer id) {
         return this.adminService.queryById(id);
     }
+
     @GetMapping("login")
     public boolean login(String phone,String password) {
         return adminDao.findByTeleAndPassword(phone,password).size()!=0;
