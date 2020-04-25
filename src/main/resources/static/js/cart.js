@@ -45,11 +45,11 @@ $(function () {
                         '</span>\n' +
                         '                </td>\n' +
                         '                <td class="cart-cell cell-count">\n' +
-                        '                    <span class="count-btn min"   data-opera-type="minus">-</span>\n' +
+                        '                    <span class="count-btn min" id="minus" onclick="minusNum()"  data-opera-type="minus">-</span>\n' +
                         '                    <input   class="count-input text_box"   type="text" value="' +
                         result.data[i].num +
                         '">\n' +
-                        '                    <span class="count-btn add"    data-opera-type="plus">+</span>\n' +
+                        '                    <span class="count-btn add"  id="plus" onclick="plusNum()"  data-opera-type="plus">+</span>\n' +
                         '                </td>\n' +
                         // '                <td class="cart-cell cell-total">￥\n' +
                         // '                    <span class="total">' +
@@ -65,27 +65,8 @@ $(function () {
                 setTotal()
             }
         }
-    })
-    $(".add").click(function () {
-        var t = $(this).parent().find('input[class*=text_box]');
-        t.val(parseInt(t.val()) + 1);
-        var price = $(this).parent().parent().find('td[class*=cell-price]').find('span[class*=price]')
-        var total = $(this).parent().parent().find('td[class*=cell-total]').find('span[class*=total]')
-        total.text(price.text() * t.val());
-        setTotal();
     });
-    $(".min").click(function () {
-        var t = $(this).parent().find('input[class*=text_box]');
-        t.val(parseInt(t.val()) - 1)
-        if (parseInt(t.val()) < 0) {
-            t.val(0);
-        }
-        var price = $(this).parent().parent().find('td[class*=cell-price]').find('span[class*=price]')
-        var total = $(this).parent().parent().find('td[class*=cell-total]').find('span[class*=total]')
-        total.text(price.text() * t.val());
-        setTotal();
-    });
-})
+});
 
 function setTotal() {
     var s = 0;
@@ -94,6 +75,29 @@ function setTotal() {
             * parseInt($(this).find('td[class*=cell-price]').find('span[class*=price]').text())
     });
     $("#total").html(s.toFixed(2));
+}
+
+function plusNum() {
+  var $this = $('#plus');
+  var t = $this.parent().find('input[class*=text_box]');
+  t.val(parseInt(t.val()) + 1);
+  var price = $this.parent().parent().find('td[class*=cell-price]').find('span[class*=price]')
+  var total = $this.parent().parent().find('td[class*=cell-total]').find('span[class*=total]')
+  total.text(price.text() * t.val());
+  setTotal();
+}
+
+function minusNum() {
+  var $this = $('#minus');
+  var t = $this.parent().find('input[class*=text_box]');
+  t.val(parseInt(t.val()) - 1);
+  if (parseInt(t.val()) < 0) {
+    t.val(0);
+  }
+  var price = $this.parent().parent().find('td[class*=cell-price]').find('span[class*=price]')
+  var total = $this.parent().parent().find('td[class*=cell-total]').find('span[class*=total]')
+  total.text(price.text() * t.val());
+  setTotal();
 }
 
 function deleteCart(id) {
@@ -138,7 +142,8 @@ function createOrder() {
             total:parseFloat($('#total').val()),
             address:$('#address').val(),
             name:$('#name').val(),
-            phone:$('#phone').val()
+            phone:$('#phone').val(),
+            num:$('.text_box').val()
         },
         xhrFields: {
             withCredentials: true

@@ -53,39 +53,39 @@ public class OrderController {
      * @return
      */
     @GetMapping("CreateOrder")
-    public OrderVo CreateOrder(String[] cardId, HttpServletRequest request,String name,String address,String phone) {
+    public OrderVo CreateOrder(String[] cardId, HttpServletRequest request, String name, String address, String phone, Integer num) {
 
         System.out.println(cardId);
-        double total=0.00;
+        double total = 0.00;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        if (user==null){
+        if (user == null) {
             return null;
         }
-        Long orderNum= Long.valueOf(Util.getOrderIdByTime());
-        System.out.println("订单号："+orderNum);
-        List<CartVo> cartVos=new ArrayList<>();
-        cardId[0]=cardId[0].replace("[","");
-        cardId[cardId.length-1]=cardId[cardId.length-1].replace("]","");
-        for (String j:cardId  ) {
-            int i= Integer.parseInt(j);
-            Cart cart=cartService.queryById(i);
+        Long orderNum = Long.valueOf(Util.getOrderIdByTime());
+        System.out.println("订单号：" + orderNum);
+        List<CartVo> cartVos = new ArrayList<>();
+        cardId[0] = cardId[0].replace("[", "");
+        cardId[cardId.length - 1] = cardId[cardId.length - 1].replace("]", "");
+        for (String j : cardId) {
+            int i = Integer.parseInt(j);
+            Cart cart = cartService.queryById(i);
             cartService.deleteById(i);
-            Issues issues=issuesService.queryById(cart.getIssuesId());
-
-            Item item=new Item(orderNum,user.getId(),cart.getIssuesId(),cart.getNum(), Util.encode(address), cart.getNum()*issues.getIssuesPrice(), "确认收货",  new Date());
-            total+= cart.getNum()*issues.getIssuesPrice();
+            Issues issues = issuesService.queryById(cart.getIssuesId());
+            issues.setIssuesNum(issues.getIssuesNum() - num);
+            issuesService.update(issues);
+            Item item = new Item(orderNum, user.getId(), cart.getIssuesId(), num, Util.encode(address), num * issues.getIssuesPrice(), "确认收货", new Date());
+            total += num * issues.getIssuesPrice();
 
             itemService.insert(item);
-            CartVo cartVo=new CartVo(issues);
+            CartVo cartVo = new CartVo(issues);
             cartVo.setId(cart.getId());
-            cartVo.setNum(cart.getNum());
+            cartVo.setNum(num);
             cartVos.add(cartVo);
         }
-        Order order=new Order( orderNum,  user.getId(),  total,  user.getAddress(),  new Date(), "确认收货");
+        Order order = new Order(orderNum, user.getId(), total, user.getAddress(), new Date(), "确认收货");
         orderService.insert(order);
-        OrderVo orderVo=new OrderVo(cartVos,orderNum);
-        return orderVo;
+        return new OrderVo(cartVos, orderNum);
 
     }
 
