@@ -5,6 +5,8 @@ function register() {
     var name = $('input[name="name"]').val();
     var age = $('input[name="age"]').val();
     var address = $('input[name="address"]').val();
+    var address2 = $('input[name="address2"]').val();
+    var address3 = $('input[name="address3"]').val();
     $.ajax({
         type: "get",
         url: "http://localhost:8080/user/register",
@@ -19,7 +21,9 @@ function register() {
             sex: sex,
             name: name,
             age: age,
-            address: address
+            address: address,
+            address2:address2,
+            address3:address3
         },
         async: true,
         // dataType: "json",

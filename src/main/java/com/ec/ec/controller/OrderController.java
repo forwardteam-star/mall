@@ -99,6 +99,8 @@ public class OrderController {
     public String Bill(String orderNum) {
         return this.orderService.Bill(orderNum);
     }
+
+
     @GetMapping("deleteById")
     public void deleteById(long id) {
          this.orderService.deleteById(id);

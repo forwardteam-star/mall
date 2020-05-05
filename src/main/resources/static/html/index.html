@@ -1,106 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="../js/jquery-3.4.1.min.js"></script>
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/header.css">
-    <link rel="stylesheet" href="../css/layout.css">
-    <script src="../js/base.js"></script>
-    <link rel="stylesheet" href="../layui/css/layui.css">
-    <script src="../js/index.js"></script>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    /*去掉li标签默认样式*/
+    li{
+      list-style: none;
+    }
+    /*最外层盒子样式处理：
+    1.设置与轮播图高宽一致
+    2.设置纵向距顶部50px，水平居中
+    3.设置自己为固定位置
+    */
+    .outer{
+      height: 470px;
+      width: 590px;
+      margin: 50px auto;
+      position:relative;
+    }
+    /*轮播图片集合处理:
+    1.将其设置为脱离文档流
+    2.设置距顶部和左侧都为0
+    */
+    .img li{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    /*顺序按钮区域处理：
+    1.设置脱离文档流
+    2.通过设置text-align、width使其整体水平居中
+    3.设置距离底部20px
+    */
+    .num{
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      bottom: 20px;
+    }
+    /*顺序按钮处理:
+       1.将其设置为行级及块级兼容显示
+       2.设置其宽高
+       3.设置背景色及字体颜色
+       4.设置字体水平居中
+       5.通过设置line-height与height一致，使其字体纵向居中
+       6.设置其样式为圆形
+       7.增加按钮左右间距
+       */
+    .num li{
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-color: darkgray;
+      color: white;
+      text-align: center;
+      line-height: 20px;
+      border-radius: 50%;
+      margin: 0 20px;
+    }
+    /*左、右按钮相同部分处理:
+     1.设置其脱离文档流
+     2.设置其宽高
+     3.设置背景色及字体颜色
+     4.设置字体水平居中
+     5.通过设置line-height与height一致，使其字体纵向居中
+     6.通过设置top、margin-top使其整体纵向居中
+     7.默认不显示
+     */
+    .btn{
+      position: absolute;
+      width: 20px;
+      height: 50px;
+      background-color: darkgray;
+      color: white;
+      text-align: center;
+      line-height: 50px;
+      top: 50%;
+      margin-top: -25px;
+      display: none;
+    }
+    /*左侧按钮处理:
+    设置左侧为0
+    */
+    .left_btn{
+      left: 0;
+    }
+    /*右侧按钮处理:
+     设置右侧为0
+     */
+    .right_btn{
+      right: 0;
+    }
+    /*鼠标悬浮至轮播图区域时左、右按钮处理:
+     1.设置左右按钮显示样式为行级块级兼容
+     2.设置鼠标放置在左右按钮时样式为小手
+     */
+    .outer:hover .btn{
+      display: inline-block;
+      cursor: pointer;
+    }
+    /*设置顺序按钮初始按钮样式:
+     设置为红色（由于样式级别问题会导致设置无效，可通过两种方式解决：
+     1.后面加上!important
+     2.将css定位写详细，比如：.outer .num .current{……
+     ）
+     */
+    .current{
+      background-color: red!important;
+    }
+  </style>
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <script src="../js/base.js"></script>
+  <link rel="stylesheet" href="../layui/css/layui.css">
+  <script src="../js/index.js"></script>
+  <script src="../jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="xm">
-    <img src="../images/A.gif"/>
+  <img src="../images/A.gif"/>
 </div>
 <div id="sitenav" class="sn">
-    <div class="area">
-        <div class="login-info" id="js_login_info">
-            <div class="say-hi">Hi，欢迎到来</div>
-            <div class="login-link-wrap" id="login-link-wrap">
-                请<a rel="nofollow" href="login.html">登录</a>
-                <span class="span-line">|</span>
-                <a rel="nofollow" target="_blank" href="login.html">免费注册</a>
-            </div>
-        </div>
-        <ul class="sn-menuwrap">
-            <li class="item menu q-myeelly">
-                <a class="menu-hd" href="order.html" rel="nofollow" target="_blank">
-                    我的订单
-                </a>
-            </li>
-            <li class="item sn-cart" id="q_cart">
-                <div class="menu-hd">
-                    <i class="sn-icon sn-i-cart"></i>
-                     <a class="link-a" id="cart_nums" href="cart.html" target="_blank" rel="nofollow">
-                        <span>购物车</span>
-                    </a>
-                </div>
-            </li>
-            <li class="item menu set-shop">
-                <a href="SuperLogin.html"
-                   target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
-            </li>
-        </ul>
-        <div class="index-link"><a class="clr-red" href="index.html" title="首页">首页</a></div>
+  <div class="area">
+    <div class="login-info" id="js_login_info">
+      <div class="say-hi">Hi，欢迎到来</div>
+      <div class="login-link-wrap" id="login-link-wrap">
+        请<a rel="nofollow" href="login.html">登录</a>
+        <span class="span-line">|</span>
+        <a rel="nofollow" target="_blank" href="login.html">免费注册</a>
+      </div>
     </div>
+    <ul class="sn-menuwrap">
+      <li class="item menu q-myeelly">
+        <a class="menu-hd" href="order.html" rel="nofollow" target="_blank">
+          我的订单
+        </a>
+      </li>
+      <li class="item sn-cart" id="q_cart">
+        <div class="menu-hd">
+          <i class="sn-icon sn-i-cart"></i>
+          <a class="link-a" id="cart_nums" href="cart.html" target="_blank" rel="nofollow">
+            <span>购物车</span>
+          </a>
+        </div>
+      </li>
+      <li class="item menu set-shop">
+        <a href="SuperLogin.html"
+           target="_blank"><span>管理<i></i></span>进入后台管理界面</a>
+      </li>
+    </ul>
+    <div class="index-link"><a class="clr-red" href="index.html" title="首页">首页</a></div>
+  </div>
 </div>
 <!--header-->
 <div class="header">
-    <div class="w">
-        <a class="logo" href="index.html">商城</a>
-        <div class="search-con">
-            <input class="search-input" id="search-input" placeholder="请输入商品名称"/>
-            <button onclick="search()" class="btn search-btn" id="search-btn">搜索</button>
-        </div>
+  <div class="w">
+    <a class="logo" href="index.html">商城</a>
+    <div class="search-con">
+      <input class="search-input" id="search-input" placeholder="请输入商品名称"/>
+      <button onclick="search()" class="btn search-btn" id="search-btn">搜索</button>
     </div>
-    <div >
-        <div class="recom-goods area">
-            <h3 class="model-title">
-                新品推荐
-            </h3>
-            <div class="recomgoods border J_recomgoods">
-                <ul class="recom clearfix J_recom" id="new" >
-                </ul>
-            </div>
-        </div>
+  </div>
+  <div>
+    <div class="recom-goods area">
+      <h3 class="model-title">
+        新品推荐
+      </h3>
+        <div class="outer">
+          <ul class="img" id="new" >
+          </ul>
+
+          <ul class="num">
+            <li class="current">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+          </ul>
+      </div>
     </div>
-    <style>
-        .border {
-            padding: 6px;
+  </div>
+  <style>
+    .border {
+      padding: 6px;
 
-            background: repeating-linear-gradient(135deg, transparent, transparent 3px, #ff1000 3px, #ff1000 8px);
-            animation: shine 1s infinite linear;
-            overflow: hidden;
-        }
-        @keyframes shine {
-            0% {
-                background-position: -1px -1px;
-            }
-            100% {
-                background-position: -12px -12px;
-            }
-        }
+      background: repeating-linear-gradient(135deg, transparent, transparent 3px, #ff1000 3px, #ff1000 8px);
+      animation: shine 1s infinite linear;
+      overflow: hidden;
+    }
 
-    </style>
+    @keyframes shine {
+      0% {
+        background-position: -1px -1px;
+      }
+      100% {
+        background-position: -12px -12px;
+      }
+    }
+
+  </style>
 </div>
 <!--header-->
 
 <div id="recommend" style="position: relative">
-    <a style="font-size: 300px;position: absolute;top: 300px;" onclick="back()"><</a>
-    <a style="font-size: 300px;position: absolute;top: 300px;right: 10px" onclick=" next()">></a>
-    <div class="recom-goods area">
-        <h3 class="model-title">
-            商品列表
-        </h3>
-        <div class="recomgoods J_recomgoods">
-            <ul class="recom clearfix J_recom" id="IssuesUL">
-            </ul>
-        </div>
+  <div class="recom-goods area">
+    <h3 class="model-title">
+      商品列表
+    </h3>
+    <div class="recomgoods J_recomgoods">
+      <ul class="recom clearfix J_recom" id="IssuesUL">
+      </ul>
     </div>
+    <a style="font-size: 300px;position: absolute;top: 500px;" onclick="back()"><</a>
+    <a style="font-size: 300px;position: absolute;top: 500px;right: 10px" onclick=" next()">></a>
+  </div>
 </div>
 
+<script>
+  /*定义位置：由于图片个数与下侧顺序按钮数量一致，可通过位置进行关联*/
+  var index = 0;
+  /*当鼠标放到顺序按钮上时：
+  1.将当前这个顺序按钮增加样式为红色背景
+  2.移除周围其他同级元素红色背景样式
+  3.获取当前顺序按钮的index
+  4.通过index获取该位置图片
+  5.一秒钟渐入该图片
+  6.一秒钟渐出其他相邻图片
+  7.防止移动过快导致的效果闪现，使用stop方法
+  */
+  $(".num li").mousemove(function () {
+    $(this).addClass("current").siblings().removeClass("current");
+    index = $(this).index();
+    $(".img li").eq(index).stop().fadeIn(1000).siblings().stop().fadeOut(1000);
+  });
+  /*设置每一秒钟自动轮播：
+  1.获取当前位置序号：自加操作；当超过图片最大序号时序号设置为0
+  2.设置下侧顺序按钮及轮播图显示
+  */
+  var time = setInterval(move, 1000);
+
+  function move() {
+    index++;
+    if (index === 4) {
+      index = 0
+    }
+    $(".num li").eq(index).addClass("current").siblings().removeClass("current");
+    $(".img li").eq(index).stop().fadeIn(1000).siblings().stop().fadeOut(1000);
+  };
+  /*当鼠标划入、划出轮播图区域时：
+  1.划入时停止自动轮播
+  2.划出时继续自动轮播
+  */
+  $(".outer").hover(function () {
+      clearInterval(time);
+    },
+    function () {
+      time = setInterval(move, 1000);
+    });
+  /*点击右侧按钮时执行*/
+  $(".right_btn").click(function () {
+    move();
+  });
+
+  /*点击左侧按钮时执行*/
+  function moveL() {
+    index--;
+    if (index === -1) {
+      index = 3
+    }
+    $(".num li").eq(index).addClass("current").siblings().removeClass("current");
+    $(".img li").eq(index).stop().fadeIn(1000).siblings().stop().fadeOut(1000);
+  }
+
+  $(".left_btn").click(function () {
+    moveL();
+  });
+</script>
 </body>
 </html>

@@ -1,5 +1,19 @@
 package com.ec.ec.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.ec.ec.Vo.DataVo;
 import com.ec.ec.Vo.ItemVo;
 import com.ec.ec.dao.IssuesDao;
@@ -9,15 +23,7 @@ import com.ec.ec.entity.Item;
 import com.ec.ec.entity.User;
 import com.ec.ec.service.ItemService;
 import com.ec.ec.util.Util;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 @RestController
 @CrossOrigin(allowCredentials="true",allowedHeaders="*")
 @RequestMapping("item")
@@ -137,6 +143,23 @@ public class ItemController {
         itemService.update(item);
     }
 
+    @GetMapping("queryPieDataByLimit")
+    public DataVo queryPieDataByLimit(){
+        DataVo dataVo = queryAllByLimit();
+        List<Item> newItems = new ArrayList<>();
+        if (dataVo.getCode() == 0) {
+            Map<Long, List<Item>> itemMap = (Map<Long, List<Item>>) ((ArrayList) dataVo.getData()).stream().collect(Collectors.groupingBy(Item::getIssuesId));
+            itemMap.forEach((k, v) -> {
+                double sumPrice = v.stream().mapToDouble(Item::getItemPrice).sum();
+                Item item = v.get(0);
+                item.setItemPrice(sumPrice);
+                newItems.add(item);
+            });
+            dataVo.setData(newItems);
+            return dataVo;
+        }
+        return null;
+    }
 
 
 }
