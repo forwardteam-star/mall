@@ -1,4 +1,6 @@
 spring:
+  devtools.restart.enabled: true
+  devtools.restart.exclude: WEB-INF/**
   datasource:
     url: jdbc:mysql://localhost:3306/issues?characterEncoding=utf8&useSSL=false&serverTimezone=UTC
     driver-class-name: com.mysql.jdbc.Driver

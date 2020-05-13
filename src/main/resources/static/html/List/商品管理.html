@@ -10,6 +10,9 @@
     <script src="../../bootstrap-3.3.7-dist/js/bootstrap.js"></script>
     <script src="../../bootstrap-3.3.7-dist/bootstrap-table.js"></script>
     <script src="../../bootstrap-3.3.7-dist/bootbox.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/extensions/editable/bootstrap-table-editable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.16.0/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
 </head>
 <body>
 <div>
@@ -116,8 +119,8 @@
             $('#mytab').bootstrapTable('resetView', {
                 height: tableHeight()
             })
-        })
-
+        });
+        $("#mytab").bootstrapTable('destroy'); // 销毁数据表格
         $('#mytab').bootstrapTable({
             url: "http://localhost:8080/issues/queryAllByLimit?page=1&limit=100",//数据源
             dataField: "data",//服务端返回数据键值 就是说记录放的键值是data，分页时使用总记录数的键值为total
@@ -152,7 +155,6 @@
             buttonsAlign: "left",//按钮对齐方式
             toolbar: "#toolbar",//指定工具栏
             toolbarAlign: "right",//工具栏对齐方式
-            
             columns: [
                 {
                     title: "全选",
@@ -172,17 +174,19 @@
                     field: "issuesName",
                     title: "商品名",
                     sortable: true,
-                    titleTooltip: "this is name"
+                    titleTooltip: "this is name",
+                    editable: {
+                        type: 'text',
+                        title: '商品名'}
                 },
-                // {
-                //     field: "issuesUrl",
-                //     title: "首图地址",
-                //     sortable: true,
-                // },
                 {
                     field: "issuesNum",
                     title: "剩余数量",
                     sortable: true,
+                    editable: {
+                        type: 'text',
+                        title: '剩余数量'}
+
                 },
                 {
                     field: "issuesDate",
@@ -193,11 +197,14 @@
                     field: "issuesPrice",
                     title: "商品价格",
                     sortable: true,
+                    editable: {
+                        type: 'text',
+                        title: '商品价格'}
                 },
                 {
                     field: "issuesDetails",
                     title: "商品详情",
-                    sortable: true,
+                    sortable: true
                 },
                 {
                     field: 'del',
@@ -209,7 +216,26 @@
                     formatter:delFunction
                 }
             ],
-            onClickRow: function (row, $element) {
+            onEditableSave: function (field, row, oldValue, $el) {
+                if (row.issuesName === '' || row.issuesNum === '' || row.issuesPrice === '') {
+                    alert("不能为空元素");
+                    location.reload();
+                }else{
+                    $.ajax({
+                        type: "post",
+                        url: "http://localhost:8080/issues/update",
+                        data: row,
+                        dataType: 'JSON',
+                        success: function (result) {
+                            if (result === "success") {
+                                alert('编辑成功');
+                            }
+                        }
+                    });
+
+                }
+            },
+                onClickRow: function (row, $element) {
                 //$element是当前tr的jquery对象,改变颜色
                 // $element.css("background-color", "green");
             },//单击row事件
@@ -227,7 +253,7 @@
         $("#addRecord").click(function () {
             alert("name:" + $("#name").val() + " age:" + $("#age").val());
         });
-    })
+    });
     //删除事件
     window.delEvents ={
         "click #del_btn":function(e,value,row,index)
